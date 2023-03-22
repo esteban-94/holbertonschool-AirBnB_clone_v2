@@ -3,6 +3,7 @@
 import cmd
 import sys
 from models.base_model import BaseModel
+from models.__init__ import storage
 from models.user import User
 from models.place import Place
 from models.state import State
@@ -146,7 +147,6 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, args):
         """ Method to show an individual object """
-        from models import storage
         new = args.partition(" ")
         c_name = new[0]
         c_id = new[2]
@@ -180,7 +180,6 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, args):
         """ Destroys a specified object """
-        from models import storage
         new = args.partition(" ")
         c_name = new[0]
         c_id = new[2]
@@ -214,21 +213,19 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
-        from models import storage
-        if not args:
-            for obj in storage.all():
-                print(storage.all()[obj].__str__())
-            return
+        print_list = []
 
-        try:
-            cls_name = eval(args).__name__
-        except NameError:
-            print("** class doesn't exist **")
-            return
-
-        for obj in storage.all():
-            if obj.startswith(f"{cls_name}."):
-                print(storage.all()[obj].__str__())
+        if args:
+            args = args.split(' ')[0]  # remove possible trailing args
+            if args not in HBNBCommand.classes:
+                print("** class doesn't exist **")
+                return
+            for k, v in storage._FileStorage__objects.items():
+                if k.split('.')[0] == args:
+                    print_list.append(str(v))
+        else:
+            for k, v in storage._FileStorage__objects.items():
+                print_list.append(str(v))
 
     def help_all(self):
         """ Help information for the all command """
@@ -236,7 +233,6 @@ class HBNBCommand(cmd.Cmd):
         print("[Usage]: all <className>\n")
 
     def do_count(self, args):
-        from models import storage
         """Count current number of class instances"""
         count = 0
         for k, v in storage._FileStorage__objects.items():
@@ -249,7 +245,6 @@ class HBNBCommand(cmd.Cmd):
         print("Usage: count <class_name>")
 
     def do_update(self, args):
-        from models import storage
         """ Updates a certain object with new info """
         c_name = c_id = att_name = att_val = kwargs = ''
 
