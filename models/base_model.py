@@ -3,7 +3,7 @@
 import uuid
 from datetime import datetime
 import models
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from os import getenv
 
@@ -17,9 +17,10 @@ else:
 
 class BaseModel:
     """A base class for all hbnb models"""
-    id = Column(String(60), primary_key=True)
-    created_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
-    updated_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
+    if getenv('HBNB_TYPE_STORAGE') != "db":
+        id = Column(String(60), primary_key=True)
+        created_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
+        updated_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
     def __init__(self, *args, **kwargs):
         """Instantiates a new model"""  
         if kwargs:
