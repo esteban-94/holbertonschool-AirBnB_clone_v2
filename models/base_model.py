@@ -5,19 +5,14 @@ from datetime import datetime
 import models
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
-from os import getenv
 
-storage_engine = getenv("HBNB_TYPE_STORAGE")
 
-if storage_engine == "db":
-    Base = declarative_base()
-else:
-    Base = object
+Base = declarative_base()
 
 
 class BaseModel:
     """A base class for all hbnb models"""
-    id = Column(String(60), primary_key=True)
+    id = Column(String(60), primary_key=True, unique=True)
     created_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow(), nullable=False)
     def __init__(self, *args, **kwargs):
@@ -58,5 +53,5 @@ class BaseModel:
         return dictionary
     
     def delete(self):
-      """Dete the current intance from the storage"""
-      models.storage.delete(self)
+        """Dete the current intance from the storage"""
+        models.storage.delete(self)
