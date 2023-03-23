@@ -5,7 +5,7 @@ from sqlalchemy import *
 from sqlalchemy import Column, String, Integer, ForeignKey, Float, Table
 from sqlalchemy.orm import relationship
 from os import getenv
-from sqlalchemy.ext.declarative import declarative_base
+import shlex
 
 
 place_amenity = Table("place_amenity", Base.metadata,
@@ -67,5 +67,6 @@ class Place(BaseModel, Base):
         @amenities.setter
         def amenities(self, obj=None):
             """ Appends amenity ids to the attribute """
+            from models.amenity import Amenity
             if type(obj) is Amenity and obj.id not in self.amenity_ids:
                 self.amenity_ids.append(obj.id)
