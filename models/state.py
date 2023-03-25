@@ -10,6 +10,7 @@ import shlex
 
 
 class State(BaseModel, Base):
+    """table of the class State"""
     __tablename__ = "states"
     name = Column(String(128), nullable=False)
     cities = relationship("City", cascade='all, delete, delete-orphan',
@@ -17,6 +18,7 @@ class State(BaseModel, Base):
 
     @property
     def cities(self):
+        """return the cities of the current state"""
         var = models.storage.all()
         lista = []
         result = []

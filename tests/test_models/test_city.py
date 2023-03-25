@@ -1,9 +1,11 @@
 #!/usr/bin/python3
 """ """
 from tests.test_models.test_base_model import test_basemodel
+from models.base_model import BaseModel
 from models.city import City
 import pycodestyle
-
+import unittest
+import os
 
 class test_City(test_basemodel):
     """ """

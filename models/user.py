@@ -6,6 +6,7 @@ from sqlalchemy.orm import relationship
 
 
 class User(BaseModel, Base):
+    """table of the class User"""
     __tablename__ = "users"
     email = Column(String(128), nullable=False)
     password = Column(String(128), nullable=False)
