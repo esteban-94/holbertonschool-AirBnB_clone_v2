@@ -7,7 +7,7 @@ import sys
 from models.base_model import BaseModel
 from console import HBNBCommand
 
-z = """create BaseModel name='test' number=1.1 
+z = """create BaseModel name='test' number=1.1
 float=1.1 str='test' list=[1, 2, 3]"""
 
 
