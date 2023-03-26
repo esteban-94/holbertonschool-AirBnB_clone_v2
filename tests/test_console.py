@@ -39,8 +39,8 @@ class TestConsole(unittest.TestCase):
             self.assertNotEqual(obj_id2, obj_id4)
             self.assertNotEqual(obj_id3, obj_id4)
         with patch('sys.stdout', new=io.StringIO()) as f:
-            self.console.onecmd("create BaseModel name='test' number=1.1\
-                                 float=1.1")
+            self.console.onecmd(
+                "create BaseModel name='test' number=1.1 float=1.1")
             obj_id5 = f.getvalue().strip()
             self.assertTrue(len(obj_id5) > 0)
             self.assertNotEqual(obj_id, obj_id5)
