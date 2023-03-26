@@ -7,6 +7,7 @@ import sys
 from models.base_model import BaseModel
 from console import HBNBCommand
 
+z="create BaseModel name='test' number=1.1 float=1.1 str='test' list=[1, 2, 3]"
 
 class TestConsole(unittest.TestCase):
     def setUp(self):
@@ -48,8 +49,8 @@ class TestConsole(unittest.TestCase):
             self.assertNotEqual(obj_id3, obj_id5)
             self.assertNotEqual(obj_id4, obj_id5)
         with patch('sys.stdout', new=io.StringIO()) as f:
-            self.console.onecmd("create BaseModel name='test' number=1.1\
-                                 float=1.1 str='test'")
+            self.console.onecmd(
+                "create BaseModel name='test' number=1.1 float=1.1 str='test'")
             obj_id6 = f.getvalue().strip()
             self.assertTrue(len(obj_id6) > 0)
             self.assertNotEqual(obj_id, obj_id6)
@@ -58,8 +59,7 @@ class TestConsole(unittest.TestCase):
             self.assertNotEqual(obj_id4, obj_id6)
             self.assertNotEqual(obj_id5, obj_id6)
         with patch('sys.stdout', new=io.StringIO()) as f:
-            self.console.onecmd("create BaseModel name='test' number=1.1\
-                                 float=1.1 str='test' list=[1, 2, 3]")
+            self.console.onecmd(z)
             obj_id7 = f.getvalue().strip()
             self.assertTrue(len(obj_id7) > 0)
             self.assertNotEqual(obj_id, obj_id7)
