@@ -20,7 +20,8 @@ def get_state_by_id(id):
 
     for state in states:
         if id == state.id:
-            return render_template('9-states.html', state=state, cities=state.cities)
+            return render_template('9-states.html',
+                                    state=state, cities=state.cities)
 
     return render_template('9-states.html', not_found=True)
 
