@@ -1,54 +1,56 @@
 #!/usr/bin/python3
+""" Script that starts a Flask web application """
 from flask import Flask, render_template
 
-
 app = Flask(__name__)
-"""decorate"""
+
+
 @app.route('/', strict_slashes=False)
 def hello():
-    """return"""
-    return "Hello HBNB!"
+    """ Function that returns a string """
+    return 'Hello HBNB!'
+
+
 @app.route('/hbnb', strict_slashes=False)
 def hbnb():
-    return "HBNB"
-"""decorate"""
+    """ Function that returns a string """
+    return 'HBNB'
+
+
 @app.route('/c/<text>', strict_slashes=False)
-def c_is_fun(text):
-    """return"""
-    text = text.replace("_", " ")
-    return f"C {text}"
-"""decorate"""
-@app.route("/python/", defaults={"text": "is_cool"})
-@app.route("/python/<text>", strict_slashes=False)
-def python(text):
-    """return"""
-    text = text.replace('_', ' ')
-    return "Python {}".format(text)
-"""decorate"""
-@app.route("/number/<int:n>", strict_slashes=False)
+def c(text):
+    """ Function that returns a string """
+    return f"C {text.replace('_', ' ')}"
+
+
+@app.route('/python', strict_slashes=False)
+@app.route('/python/<text>', strict_slashes=False)
+def python(text='is cool'):
+    """ Function that returns a string """
+    return f"Python {text.replace('_', ' ')}"
+
+
+@app.route('/number/<int:n>', strict_slashes=False)
 def number(n):
-    """return"""
+    """ Function that returns a string """
     return f"{n} is a number"
-"""decorate"""
-@app.route("/number_template/<int:n>", strict_slashes=False)
-def number_html(n):
-    """return"""
-    return render_template("5-number.html", n=n)
-"""decorate"""
-@app.route("/number_odd_or_even/<int:n>", strict_slashes=False)
-def odd_or_even(n):
-    """conditional"""
-    ev_od = ""
-    if n % 2 == 1:
-        """return"""
-        ev_od = "odd"
-        return render_template("6-number_odd_or_even.html", n=n, ev_od=ev_od)
-    elif n % 2 == 0:
-        """return"""
-        ev_od = "even"
-        return render_template("6-number_odd_or_even.html", n=n, ev_od=ev_od)
 
 
-if __name__ == "__main__":
-    """run flask"""
-    app.run(host="0.0.0.0", port=5000)
+@app.route('/number_template/<int:n>', strict_slashes=False)
+def number_template(n):
+    """ Function that returns a number in template """
+    return render_template('5-number.html', num=n)
+
+
+@app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
+def number_odd_or_even(n):
+    """ Function that returns a number even|odd """
+    html_str = '6-number_odd_or_even.html'
+    if n % 2 == 0:
+        return render_template(html_str, num=n, odd_or_even='even')
+    else:
+        return render_template(html_str, num=n, odd_or_even='odd')
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
