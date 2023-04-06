@@ -7,17 +7,22 @@ app = Flask(__name__)
 
 
 @app.route('/states', strict_slashes=False)
-def states():
-    """s"""
+def states_list():
+    """Displays a HTML page with a list of states"""
     states = storage.all(State).values()
-    return render_template('9-states.html', states=states)
+    return render_template('7-states_list.html', states=states)
 
 
-@app.route('/states/<text>', strict_slashes=False)
-def python(text):
-    """s"""
+@app.route('/states/<id>', strict_slashes=False)
+def get_state_by_id(id):
+    """Display a HTML page of a State and their cities"""
     states = storage.all(State).values()
-    return render_template('9-states.html', states=states, id=text)
+
+    for state in states:
+        if id == state.id:
+            return render_template('9-states.html', state=state, cities=state.cities)
+
+    return render_template('9-states.html', not_found=True)
 
 
 @app.teardown_appcontext
