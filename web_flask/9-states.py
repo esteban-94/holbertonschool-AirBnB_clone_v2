@@ -12,11 +12,13 @@ def states():
     states = storage.all(State).values()
     return render_template('9-states.html', states=states)
 
+
 @app.route('/states/<text>', strict_slashes=False)
 def python(text):
     """s"""
     states = storage.all(State).values()
     return render_template('9-states.html', states=states, id=text)
+
 
 @app.teardown_appcontext
 def teardown_db(self):
